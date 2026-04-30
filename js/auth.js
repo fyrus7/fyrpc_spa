@@ -20,40 +20,36 @@ function validateLogin() {
     return;
   }
 
-  fetch(`${WORKER_API}/login`, {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ password: pwd })
-  })
-  .then(async r => {
+fetch(`${WORKER_API}/login`, {
+  method: "POST",
+  headers: {"Content-Type":"application/json"},
+  body: JSON.stringify({ password: pwd })
+})
+.then(async r => {
   const text = await r.text();
-  console.log("RAW RESPONSE:", text);
+  console.log("RAW:", text);
+
   return JSON.parse(text);
-})w
-  .then(res => {
-    isLoggingIn = false;
-    resetBtn();
+})
+.then(res => {
+  isLoggingIn = false;
+  resetBtn();
 
-    if (!res.success) {
-      err.innerText = "Wrong Password";
-      return;
-    }
-
-    localStorage.setItem("sessionToken", res.token);
-    localStorage.setItem("userProfile", res.profile);
-
-    routeUser(res.profile);
-  })
-  .catch(() => {
-    err.innerText = "No internet";
-    resetBtn();
-  });
-
-  function resetBtn() {
-    btn.innerText = "Login";
-    btn.disabled = false;
+  if (!res.success) {
+    err.innerText = "Wrong Password";
+    return;
   }
-}
+
+  localStorage.setItem("sessionToken", res.token);
+  localStorage.setItem("userProfile", res.profile);
+
+  routeUser(res.profile);
+})
+.catch(err => {
+  console.log("REAL ERROR:", err);
+  err.innerText = err.message || "Request failed";
+  resetBtn();
+});
 
 function validateSession() {
   const token = localStorage.getItem("sessionToken");
