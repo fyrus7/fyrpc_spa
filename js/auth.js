@@ -25,7 +25,11 @@ function validateLogin() {
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({ password: pwd })
   })
-  .then(r => r.json())
+  .then(async r => {
+  const text = await r.text();
+  console.log("RAW RESPONSE:", text);
+  return JSON.parse(text);
+})w
   .then(res => {
     isLoggingIn = false;
     resetBtn();
