@@ -1,0 +1,23 @@
+/* css/style.css */
+
+.glass-container {
+  width: 300px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.input-box {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+}
