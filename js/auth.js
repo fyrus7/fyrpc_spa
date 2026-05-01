@@ -50,7 +50,7 @@ fetch(`${WORKER_API}/login`, {
   err.innerText = err.message || "Request failed";
   resetBtn();
 });
-
+}
 function validateSession() {
   const token = localStorage.getItem("sessionToken");
   if (!token) return Promise.resolve(null);
