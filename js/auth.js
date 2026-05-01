@@ -45,12 +45,13 @@ fetch(`${WORKER_API}/login`, {
 
   routeUser(res.profile);
 })
-.catch(err => {
-  console.log("REAL ERROR:", err);
-  err.innerText = err.message || "Request failed";
+.catch(e => {
+  console.log("REAL ERROR:", e);
+  err.innerText = e.message || "Request failed";
   resetBtn();
 });
 }
+
 function validateSession() {
   const token = localStorage.getItem("sessionToken");
   if (!token) return Promise.resolve(null);
