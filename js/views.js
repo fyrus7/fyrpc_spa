@@ -1,5 +1,7 @@
 function loginPage() {
   return `
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
   <div class="glass-container">
 
     <img src="https://raw.githubusercontent.com/fyrus7/FyrusApp/heads/main/media/flogo.png" width="200">
@@ -41,6 +43,8 @@ function loginPage() {
 
 function mobilePage() {
   return `
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <div id="uiBlocker"></div>
 <div id="globalSpinner">
     <i class="bi bi-arrow-repeat spin"></i>
