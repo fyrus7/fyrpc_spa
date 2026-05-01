@@ -26,35 +26,40 @@ function validateLogin() {
     return;
   }
 
-  fetch(`${WORKER_API}/login`, {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ password: pwd })
-  })
-  .then(async r => {
-    const text = await r.text();
-    console.log("RAW:", text);
-    return JSON.parse(text);
-  })
-  .then(res => {
-    resetBtn();
+fetch(`${WORKER_API}/login`, {
+  method: "POST",
+  headers: {"Content-Type":"application/json"},
+  body: JSON.stringify({ password: pwd })
+})
+.then(async r => {
 
-    if (!res.success) {
-      err.innerText = "Wrong Password";
-      return;
-    }
+  if (!r.ok) {
+    throw new Error("HTTP " + r.status);
+  }
 
-    localStorage.setItem("sessionToken", res.token);
-    localStorage.setItem("userProfile", res.profile);
+  const text = await r.text();
+  console.log("RAW:", text);
 
-    routeUser(res.profile);
-  })
-  .catch(e => {
-    console.log("REAL ERROR:", e);
-    err.innerText = e.message || "Request failed";
-    resetBtn();
-  });
-}
+  return JSON.parse(text);
+})
+.then(res => {
+  resetBtn();
+
+  if (!res.success) {
+    err.innerText = "Wrong Password";
+    return;
+  }
+
+  localStorage.setItem("sessionToken", res.token);
+  localStorage.setItem("userProfile", res.profile);
+
+  routeUser(res.profile);
+})
+.catch(e => {
+  console.log("REAL ERROR:", e);
+  err.innerText = "Server error / connection issue";
+  resetBtn();
+});
 
 function validateSession() {
   const token = localStorage.getItem("sessionToken");
@@ -65,9 +70,11 @@ function validateSession() {
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({ token })
   })
-  .then(r => r.json())
-  .then(res => res.valid ? res.profile : null)
-  .catch(() => null);
+  .then(async r => {
+  if (!r.ok) return null;
+  const text = await r.text();
+  return JSON.parse(text);
+})
 }
 
 function logout() {
