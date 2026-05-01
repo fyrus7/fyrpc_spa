@@ -1,23 +1,1081 @@
-/* css/style.css */
 
-.glass-container {
-  width: 300px;
-  margin: 50px auto;
-  padding: 20px;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
+        body {
+          font-family: 'K2D', sans-serif;
+          min-height: 100vh;
+          display: grid;
+          place-items: center;
+          background: url("../images/gradient.jpg") no-repeat center center fixed;
+          background-size: cover;
+          padding: 20px:
+        }
+
+        .glass-container {
+        margin-top: 30px;
+          background: rgba(255, 255, 255, 0.18);
+          backdrop-filter: blur(12px);
+          border-radius: 16px;
+          padding: 40px 30px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+          max-width: 400px;
+          text-align: center;
+          animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .input-box {
+          width: 200px;
+          padding: 10px;
+          font-size: 15px;
+          border-radius: 20px;
+          background: rgba(255, 255, 255, 0.25);
+          border: 1px solid rgba(255,255,255,0.4);
+          text-align: center;
+          outline: none;
+          transition: all 0.2s ease;
+        }
+        .input-box:focus {
+          border-color: #e83e8c;
+          box-shadow: 0 0 10px rgba(232,62,140,0.3);
+        }
+
+        .submit-button {
+          width: 120px;
+          font-size: 15px;
+          color: #fff;
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          padding: 8px 0;
+          cursor: pointer;
+          border: none;
+          border-radius: 20px;
+          transition: all 0.2s ease;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+          margin-top: 10px;
+        }
+        .submit-button:hover:not(:disabled) {
+          opacity: 0.9;
+        }
+
+        #toggle-password {
+          position: absolute;
+          right: 10px;
+          top: 35%;
+          transform: translateY(-50%);
+          cursor: pointer;
+
+          font-size: 18px;
+          color: #6f42c1;
+        }
+
+        .login-info-box {
+          margin-top: 15px;
+          padding: 12px;
+          border: 1px solid rgba(0,0,0,0.2);
+          border-radius: 10px;
+          background: rgba(255,255,255,0.6);
+          font-size: 14px;
+
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .login-info-title {
+          text-align: center;
+          font-weight: bold;
+          margin-bottom: 8px;
+        }
+
+        .login-info-content {
+          display: inline-block;
+          text-align: left;
+        }
+
+// mobile
+
+
+        /* Set the background color for the entire page */
+        body {
+          background-color: #E8ECEF; /* Change to your preferred color */
+          font-family: "Helvetica Neue", sans-serif, Arial;
+          padding-bottom: 80px;
+          overflow-y: auto;
+          margin-top: 30px;
+        }
+
+        #logoutMenu {
+          display: none;
+          position: fixed;
+          top: 60px;
+          right: 10px;
+          background: #ffffff;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+          z-index: 999;
+          min-width: 180px;
+        }
+
+        /* hover sikit bagi feel menu */
+        #logoutMenu div:hover {
+          background: #f5f5f5;
+        }
+
+        #uiBlocker {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+
+          background: transparent; /* boleh tukar rgba kalau nak gelap sikit */
+          z-index: 9999;
+
+          display: none;
+        }
+
+        .top-header {
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 30px;
+          padding: 0 12px;
+          color: white;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* text dalam header */
+        .top-header #profileNameDisplay {
+          color: white !important;
+          font-size: 14px;
+        }
+
+        #profileNameDisplay {
+          color: white !important;
+        }
+
+        /* logout icon */
+        #logoutBtn {
+          color: white !important;
+        }
+
+        .search-box {
+          width: 100%;
+          padding: 12px 15px;
+          font-size: 15px;
+          box-sizing: border-box;
+          padding-right: 60px;
+
+          border-radius: 30px;
+          border: 1px solid #e0e0e0;
+
+          background: #fff;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+          outline: none;
+          transition: all 0.2s ease;
+        }
+
+        .search-box:focus {
+          border-color: #e83e8c;
+          box-shadow: 0 4px 16px rgba(232,62,140,0.2);
+        }
+
+            #searchButton {
+              position: absolute;
+              top: 0;
+              right: 0;
+              height: 100%;
+              width: 50px;
+              background: linear-gradient(135deg, #6f42c1, #e83e8c);
+              color: #ffffff;
+              font-size: 16px;
+              border: none;
+              border-top-right-radius: 25px;
+              border-bottom-right-radius: 25px;
+              cursor: pointer;
+            }
+            #searchButton:hover {
+          opacity: 0.9;
+        }
+/*
+        #footer {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 70px;
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          z-index: 1000;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          padding-top: 10px;
+        }
+*/
+
+#footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:70px;
+  background:linear-gradient(135deg,#6f42c1,#e83e8c);
+  display:flex;
+  justify-content:center;
+  align-items: flex-start;
+  z-index:1000;
+  padding-top: 6px;
+}
+/* container 2 button */
+.dropdown-container{
+  display:flex;
+  align-items:flex-start;
+  gap: 150px;
+}
+
+.dropdown-btn,
+.walkinButton{
+  width:100px;
+  height:30px;
+  border:none;
+  border-radius:20px;
+  background:rgba(255,255,255,.2);
+  color:#fff;
+}
+
+
+        .floating-button-wrapper {
+          position: absolute;
+
+          top: -15px;              /* 🔥 naik atas footer */
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        #startButton {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: white;
+          color: #e83e8c;
+          font-size: 22px;
+          box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        }
+
+        #startButton i {
+          font-size: 26px;
+        }
+
+        #searchOption {
+          appearance: none;
+          background-color: transparent;
+          color: #fff;
+          padding: 0 15px;
+          border: none;
+          background: rgba(255,255,255,0.2);
+          border-radius: 20px;
+          font-size: 16px;
+          cursor: pointer;
+          height: 30px;
+          line-height: normal;
+          display: inline-block;
+          width: auto;
+          }
+        #searchOption option {
+          color: #000;
+        }
+        #searchOption:focus {
+           outline: none;
+           box-shadow: 0 0 0 0.2rem rgba(28, 49, 58, 0.5);
+        }
+        #searchButton:disabled {
+          background-color: #455A64; /* sama macam normal */
+          color: #ffffff;
+          cursor: not-allowed;
+          opacity: 1;
+        }
+
+
+        .result-item {
+        text-align: left;
+          border: none;
+          border-radius: 14px;
+          padding: 14px;
+          background: #fff;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+          transition: all 0.2s ease;
+        }
+
+        .result-item.selected {
+          border: 2px solid #28a745;
+          background: #eaf7ee;
+        }
+
+        /* category */
+        .result-item .category {
+          font-size: 13px;
+          color: #666;
+          font-weight: 600;
+        }
+
+        /* bib row */
+        .result-item .bib {
+          display: flex;
+          align-items: baseline;
+          gap: 10px;
+        }
+
+        /* bib number */
+        .result-item .bib-number {
+          font-size: 38px;
+          font-weight: 800;
+          line-height: 1;
+          color: #6f42c1;
+        }
+
+        /* name */
+        .result-item .name {
+          font-size: 14px;
+          font-weight: 700;
+          text-transform: uppercase;
+          color: #333;
+          letter-spacing: 0.5px;
+        }
+
+        /* size */
+        .result-item .bib-size {
+          font-size: 22px;
+          color: #555;
+          font-weight: 600;
+        }
+
+        .collect-box {
+          position: fixed;
+          bottom: 53px; /* sikit atas footer */
+          width: 100%;
+          left: -10px;
+          height:95px;
+          background: #ffffff;
+          border-top-right-radius: 30px;
+          border-top-left-radius: 30px;
+          padding: 10px;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+          z-index: 999;
+          display: none;
+        }
+
+        .collect-box .collect-button {
+        /*  width: calc(100% - 20px); */
+          margin-top: 10px;
+        /*  height: 35px; */
+        }
+
+        .collect-button-wrapper {
+          display: flex;
+          gap: 40px;
+          justify-content: center;
+        }
+
+        .collect-button {
+          flex: 1;
+          max-width: 150px;
+          height: 35px;
+          font-size: 16px;
+          padding: 5px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 25px;
+          cursor: pointer;
+          display: none;
+        }
+        .collect-button:disabled {
+          background-color: #9E9E9E; /* Grey */
+          cursor: not-allowed;
+          opacity: 0.8;
+        }
+        #holdButton {
+          min-width: 90px;
+          background: #ffc107;
+          color: #333;
+        }
+
+        .clear-button {
+          display: none;
+
+          position: absolute;
+          width: 100%;
+          top: 55px;   /* ✅ kekal */
+          left: 0;
+          text-align: center;
+          z-index: 10;
+        }
+
+        /* floating state */
+        .clear-button.floating {
+          position: fixed;
+          top: 40px;   /* 🔥 naik lagi rapat ke atas */
+          left: 50%;
+          transform: translateX(-50%);
+          width: auto;
+          z-index: 1000;
+        }
+
+        .icon-clear-button {
+          font-size: 13px;
+          width: 130px;
+          height: 32px;
+          padding: 5px;
+
+          cursor: pointer;
+
+          color: white;
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+
+          border-radius: 20px;
+          border: none;
+
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+          transition: all 0.2s ease;
+        }
+        .icon-clear-button:hover {
+          opacity: 0.9;
+        }
+
+        #collectBy1,
+        #collectBy2 {
+          height: 20px !important;
+          padding: 3px 8px !important;
+
+          border-radius: 14px;
+          border: 1px solid #ddd;
+
+          font-size: 12px;
+
+          outline: none;
+
+          transition: all 0.2s ease;
+        }
+
+        #collectBy1:focus,
+        #collectBy2:focus {
+          border-color: #e83e8c;
+          box-shadow: 0 2px 8px rgba(232,62,140,0.2);
+        }
+
+        .counter {
+          position: absolute;
+          font-size: 14px;
+          font-style: italic;
+          top: 80px;
+          left: 0; /* Terus di kiri container */
+          text-align: left;
+          padding-left: 10px; /* Jarak dari tepi kiri */
+          z-index: 10;
+        }
+        .collect-input {
+          width: 100px;
+          height: 24px;
+
+          font-size: 12px;
+          padding: 3px 8px;
+
+          margin-left: 5px;
+
+          border-radius: 14px;
+          border: 1px solid #ddd;
+
+          outline: none;
+          transition: all 0.2s ease;
+        }
+        .collect-input:focus {
+          border-color: #e83e8c;
+          box-shadow: 0 2px 6px rgba(232,62,140,0.2);
+        }
+
+        .hold-btn {
+          background: #ffc107;
+          color: #333;
+        }
+
+        .floating-select {
+          position: fixed;
+          bottom: 175px;
+          left: 50%;
+          transform: translateX(-50%);
+
+          padding: 10px 20px;
+          border-radius: 30px;
+          border: none;
+
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          color: #fff;
+
+          font-weight: 600;
+          font-size: 10px;
+
+          box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+
+          z-index: 999;
+          display: none;
+        }
+        .floating-select:hover {
+          opacity: 0.9;
+        }
+
+        .result-box {
+          margin: 65px auto 0;
+          width: 100%;
+          max-width: 345px;
+
+          display: flex;
+          flex-direction: column;
+          row-gap: 10px;
+        }
+
+
+        /**********************/
+
+
+        /* Modal Styles */
+        .modal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 1000; /* Sit on top */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: hidden; /* Disable scroll */
+          background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+        }
+
+        .modal-content {
+          position: relative; /* Relative positioning for content */
+          height: 100%; /* Full height */
+        }
+
+        .modal-body {
+          text-align: center; /* Center the QR reader */
+         // height: calc(100% - 60px); /* Adjust for footer height */
+          padding-top: 60px; /* Add padding for space above the scanner */
+        }
+
+        .back-button {
+          position: absolute; /* Position the back button */
+          top: 10px; /* Spacing from top */
+          left: 10px; /* Spacing from left */
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #fff; /* Change color to white */
+          font-size: 18px;
+          padding-top: 10px;
+          z-index: 1001; /* Ensure the back button is above other elements */
+        }
+
+            .torchToggle {
+              position: absolute;
+              top: 70px;
+              left: 50%;
+              transform: translateX(-50%);
+              z-index: 9999;
+              display: none;
+              width: 150px;
+              height: 45px;
+              cursor: pointer;
+              background-color: transparent;
+              color: white; // #455A64;
+              border: none; // solid 0.5px white; // #455A64;
+              border-radius: 5px;
+            }
+
+
+            .form-container {
+              margin-top: 5px;
+              position: relative;
+            }
+            .search-wrapper {
+              position: relative;
+              width: 350px;
+            }
+
+
+        .collected-info {
+          margin-top: 2px;
+          display: flex;
+          flex-direction: column;
+          gap: 1px;
+        }
+
+        .collected-info div {
+          font-size: 13px;
+          line-height: 1;
+        }
+
+        #message {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 9999;
+          display: none; /* 🚨 default sembunyi */
+        }
+
+        .status-box {
+          position: fixed; /* 🔥 tukar dari absolute */
+          top:34%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 90%;
+          max-width: 320px;
+          font-size: 18px;
+          font-weight: bold;
+          background: #ffffff;
+          border-radius: 16px;
+          padding: 16px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+          display: none;
+          z-index: 9999;
+          text-align: center;
+        }
+        .status-box p {
+          margin: 0;
+          font-size: 20px;
+        }
+        .ok-button {
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          padding: 6px 16px;
+          border: none;
+          border-radius: 20px;
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          color: white;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+          transition: all 0.2s ease;
+        }
+        .ok-button:hover {
+          opacity: 0.9;
+        }
+
+        /* hide footer semasa modal on */
+        .hide-footer {
+          display: none !important;
+        }
+/*
+            .dropdown-container {
+              position: absolute;
+              right: 50%;
+              transform: translateX(-65px);
+            }
+*/
+        /* Terapung kiri sikit dari tengah */
+        .showCollectedbutton {
+          position: absolute;
+          right: 10px;
+          background-color: transparent; //#007bff;
+          color: white;
+          border: none;
+          padding: 5px;
+          border-radius: 5px;
+          font-size: 16px;
+          cursor: pointer;
+        }
+/*
+        .walkinButton {
+          position: absolute;
+          right: 50px;
+          background-color: transparent;
+          color: white;
+          border: none;
+          padding: 5px;
+          border-radius: 5px;
+          font-size: 16px;
+          cursor: pointer;
+        }
+*/
+
+        /* ===== HOLD MODAL ===== */
+        .hold-modal {
+          display: none;
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.15); /* ringan, bukan hitam */
+          z-index: 9999;
+          justify-content: center;
+          align-items: flex-start; /* modal turun sikit dari top */
+          padding-top: 80px; /* jarak dari atas */
+        }
+
+        .hold-modal-box {
+          position: relative; /* untuk X button */
+          background: #ffffff;
+          width: 92%;
+          max-width: 420px;
+          border-radius: 14px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+          padding: 16px;
+          color: #222;
+          margin: 0 10px; /* padding kiri kanan untuk mobile */
+          box-sizing: border-box;
+        }
+
+        /* ===== HEADER ===== */
+        .hold-modal-header {
+          font-size: 16px;
+          font-weight: 600;
+          margin-bottom: 12px;
+          text-align: center;
+          color: #263238;
+        }
+
+        /* ===== GRID DISPLAY ===== */
+        .hold-grid {
+          display: flex;
+          flex-direction: column; /* baris ke bawah */
+          gap: 8px;
+          max-height: 50vh;
+          overflow-y: auto;
+        }
+
+        /* Setiap item dalam grid */
+        .hold-item {
+          display: block; /* ❗ buang grid */
+          padding: 10px 12px;
+          border-radius: 8px;
+          background: #f7f7f7;
+          border: 1px solid #e0e0e0;
+        }
+
+        .hold-row {
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+        }
+
+        /* ===== ITEM TEXT ===== */
+        .hold-name {
+          font-size: 14px;
+          color: #444;
+          margin-bottom: 6px;
+          text-align: left;
+        }
+
+        .hold-bib {
+          font-size: 16px;
+          font-weight: 700;
+          color: #000;
+        }
+
+        .hold-size {
+          font-size: 14px;
+          color: #555;
+          font-weight: 500;
+        }
+
+        /* ===== ACTION BUTTONS ===== */
+        .hold-modal-actions {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 16px;
+          gap: 10px; /* gap antara button */
+        }
+
+        .btn-cancel {
+          flex: 1;
+          background: #f1f3f5;   /* light neutral */
+          color: #555;
+          border: none;
+          border-radius: 20px;
+          padding: 10px 0;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .btn-collect {
+          flex: 1;
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          color: #fff;
+          border: none;
+          border-radius: 20px;
+          padding: 10px 0;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+          transition: all 0.2s ease;
+        }
+        .btn-cancel:hover,
+        .btn-collect:hover {
+          opacity: 0.9;
+        }
+
+        /* ===== CLOSE BUTTON ===== */
+        .hold-modal-close {
+          position: absolute;
+          top: 8px;
+          right: 10px;
+          font-size: 20px;
+          background: transparent;
+          border: none;
+          color: #555;
+          cursor: pointer;
+          font-weight: bold;
+        }
+        .hold-modal-close:hover {
+          color: #000;
+        }
+
+
+
+        /* ===== WALKIN BOX (IMPROVED) ===== */
+        .walkin-box {
+          position: fixed;
+          top: 10%;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 300px;
+          max-width: 92%;
+          background: #ffffff;
+          border: none;
+          border-radius: 16px;
+          padding: 16px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+          display: none;
+          z-index: 1000;
+          text-align: center;
+        }
+
+        /* Title */
+        .walkin-box h3 {
+          margin-top: 0;
+          margin-bottom: 15px;
+          font-weight: 700;
+          font-size: 18px;
+        }
+
+        /* Close button */
+        .walkin-box .close {
+          position: absolute;
+          right: 12px;
+          top: 10px;
+          font-size: 20px;
+          cursor: pointer;
+        }
+
+        /* Inputs */
+        .walkin-box input {
+          width: 90%;
+          margin: 5px auto;
+
+          padding: 7px;
+          border-radius: 8px;
+
+          border: 1px solid #ddd;
+
+          text-align: center;
+          font-size: 13px;
+        }
+
+        /* Bib + Chip row */
+        .bib-chip-row {
+          display: flex;
+          justify-content: center;
+          gap: 6px; /* tambah sikit spacing */
+          margin-top: 5px;
+        }
+
+        .bib-chip-row input {
+          width: 120px; /* kecil sikit */
+        }
+
+        /* Radio section */
+        .walkin-box label {
+          font-size: 14px;
+        }
+
+        /* Buttons */
+        .walkin-box button {
+          padding: 8px 14px;
+          font-size: 13px;
+          border: none;
+          border-radius: 20px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        /* Button row */
+        .walkin-box .btn-row {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 10px;
+        }
+
+        /* QR image */
+        #walkinQR {
+          width: 180px;   /* kecilkan sikit */
+          margin: 10px auto;
+        }
+
+        /* Loader */
+        #walkinLoader {
+          margin-top: 15px;
+        }
+
+        #walkinSubmitBtn {
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          color: white;
+        }
+        .walkin-box .btn-row button:last-child {
+          background: #eee;
+          color: #333;
+        }
+        .walkin-box button:hover {
+          opacity: 0.9;
+        }
+
+            .spin {
+              animation: spin 1s linear infinite;
+              display: inline-block;
+            }
+            @keyframes spin {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+/*
+
+.dropdown-btn {
+  width: 100px;
+  height: 30px;
+
+  padding: 0;
+  border-radius: 20px;
+  border: none;
+
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 14px;
+
+  text-align: center;
+}
+*/
+.dropdown-menu {
+  position: absolute;
+  bottom: 80px; /* 🔥 dropup */
+  left: 15%;
+  transform: translateX(-30%);
+  width: 130px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  display: none;
+  z-index: 2000;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.dropdown-item:hover {
+  background: #f5f5f5;
+}
+
+
+/* WALKIN DROPDOWN BUTTON FIX */
+#walkinDropdownBtn {
+  display: block;
+  width: 92%;
+  margin: 0 auto;
+
+  padding: 7px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+
+  background: #fff;
+  color: #333;
+
+  font-size: 13px;
   text-align: center;
 }
 
-.input-box {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
+
+#walkinDropdownMenu {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width:70px;
+  bottom: 80px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  z-index: 2000;
 }
 
-.submit-button {
-  width: 100%;
-  padding: 10px;
-  border-radius: 20px;
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+
+  align-items: center;   /* 🔥 center semua card */
+}
+
+.card-item {
+  width: 85%;            /* 🔥 kecilkan lebar */
+  max-width: 280px;      /* 🔥 limit supaya tak besar sangat */
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card-item .label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.card-item .value {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card-item.collected {
+  background: #eaf7ee;
+  color: #28a745;
+}
+
+.card-item.uncollected {
+  background: #fff3cd;
+  color: #856404;
 }
