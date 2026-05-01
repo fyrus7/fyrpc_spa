@@ -10,6 +10,12 @@ function validateLogin() {
   const btn = document.getElementById('submit-btn');
   const err = document.getElementById('error-message');
 
+  function resetBtn() {
+    btn.innerText = "Login";
+    btn.disabled = false;
+    isLoggingIn = false;
+  }
+
   err.innerText = "";
   btn.innerText = "Loading...";
   btn.disabled = true;
@@ -20,36 +26,34 @@ function validateLogin() {
     return;
   }
 
-fetch(`${WORKER_API}/login`, {
-  method: "POST",
-  headers: {"Content-Type":"application/json"},
-  body: JSON.stringify({ password: pwd })
-})
-.then(async r => {
-  const text = await r.text();
-  console.log("RAW:", text);
+  fetch(`${WORKER_API}/login`, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ password: pwd })
+  })
+  .then(async r => {
+    const text = await r.text();
+    console.log("RAW:", text);
+    return JSON.parse(text);
+  })
+  .then(res => {
+    resetBtn();
 
-  return JSON.parse(text);
-})
-.then(res => {
-  isLoggingIn = false;
-  resetBtn();
+    if (!res.success) {
+      err.innerText = "Wrong Password";
+      return;
+    }
 
-  if (!res.success) {
-    err.innerText = "Wrong Password";
-    return;
-  }
+    localStorage.setItem("sessionToken", res.token);
+    localStorage.setItem("userProfile", res.profile);
 
-  localStorage.setItem("sessionToken", res.token);
-  localStorage.setItem("userProfile", res.profile);
-
-  routeUser(res.profile);
-})
-.catch(e => {
-  console.log("REAL ERROR:", e);
-  err.innerText = e.message || "Request failed";
-  resetBtn();
-});
+    routeUser(res.profile);
+  })
+  .catch(e => {
+    console.log("REAL ERROR:", e);
+    err.innerText = e.message || "Request failed";
+    resetBtn();
+  });
 }
 
 function validateSession() {
