@@ -1,4 +1,4 @@
-const WORKER_API = "https://fyrpc.iamfyrus.workers.dev";
+const WORKER_API = "https://fyrpc2.iamfyrus.workers.dev";
 
 let isLoggingIn = false;
 
