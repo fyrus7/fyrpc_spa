@@ -2,6 +2,7 @@ const WORKER_API = "https://fyrpc.iamfyrus.workers.dev";
 
 let isLoggingIn = false;
 
+// 🔐 LOGIN
 function validateLogin() {
   if (isLoggingIn) return;
   isLoggingIn = true;
@@ -26,41 +27,44 @@ function validateLogin() {
     return;
   }
 
-fetch(`${WORKER_API}/login`, {
-  method: "POST",
-  headers: {"Content-Type":"application/json"},
-  body: JSON.stringify({ password: pwd })
-})
-.then(async r => {
+  fetch(`${WORKER_API}/login`, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ password: pwd })
+  })
+  .then(async r => {
 
-  if (!r.ok) {
-    throw new Error("HTTP " + r.status);
-  }
+    if (!r.ok) {
+      throw new Error("HTTP " + r.status);
+    }
 
-  const text = await r.text();
-  console.log("RAW:", text);
+    const text = await r.text();
+    console.log("RAW:", text);
 
-  return JSON.parse(text);
-})
-.then(res => {
-  resetBtn();
+    return JSON.parse(text);
+  })
+  .then(res => {
+    resetBtn();
 
-  if (!res.success) {
-    err.innerText = "Wrong Password";
-    return;
-  }
+    if (!res.success) {
+      err.innerText = "Wrong Password";
+      return;
+    }
 
-  localStorage.setItem("sessionToken", res.token);
-  localStorage.setItem("userProfile", res.profile);
+    localStorage.setItem("sessionToken", res.token);
+    localStorage.setItem("userProfile", res.profile);
 
-  routeUser(res.profile);
-})
-.catch(e => {
-  console.log("REAL ERROR:", e);
-  err.innerText = "Server error / connection issue";
-  resetBtn();
-});
+    routeUser(res.profile);
+  })
+  .catch(e => {
+    console.log("REAL ERROR:", e);
+    err.innerText = "Server error / connection issue";
+    resetBtn();
+  });
+}
 
+
+// 🔍 VALIDATE SESSION
 function validateSession() {
   const token = localStorage.getItem("sessionToken");
   if (!token) return Promise.resolve(null);
@@ -71,12 +75,16 @@ function validateSession() {
     body: JSON.stringify({ token })
   })
   .then(async r => {
-  if (!r.ok) return null;
-  const text = await r.text();
-  return JSON.parse(text);
-})
+    if (!r.ok) return null;
+    const text = await r.text();
+    const res = JSON.parse(text);
+    return res.valid ? res.profile : null;
+  })
+  .catch(() => null);
 }
 
+
+// 🚪 LOGOUT
 function logout() {
   const token = localStorage.getItem("sessionToken");
 
