@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <style>
+      
+        /* Set the background color for the entire page */
+        body {
+          background-color: #E8ECEF; /* Change to your preferred color */
+          font-family: "Helvetica Neue", sans-serif, Arial;
+          padding-bottom: 80px;
+          overflow-y: auto;
+          margin-top: 30px;
+        }
+
+        #logoutMenu {
+          display: none;
+          position: fixed;
+          top: 60px;
+          right: 10px;
+          background: #ffffff;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+          z-index: 999;
+          min-width: 180px;
+        }
+
+        /* hover sikit bagi feel menu */
+        #logoutMenu div:hover {
+          background: #f5f5f5;
+        }
+
+        #uiBlocker {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+
+          background: transparent; /* boleh tukar rgba kalau nak gelap sikit */
+          z-index: 9999;
+
+          display: none;
+        }
+
+        .top-header {
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 30px;
+          padding: 0 12px;
+          color: white;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* text dalam header */
+        .top-header #profileNameDisplay {
+          color: white !important;
+          font-size: 14px;
+        }
+
+        #profileNameDisplay {
+          color: white !important;
+        }
+
+        /* logout icon */
+        #logoutBtn {
+          color: white !important;
+        }
+
+        .search-box {
+          width: 100%;
+          padding: 12px 15px;
+          font-size: 15px;
+          box-sizing: border-box;
+          padding-right: 60px;
+
+          border-radius: 30px;
+          border: 1px solid #e0e0e0;
+
+          background: #fff;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+          outline: none;
+          transition: all 0.2s ease;
+        }
+
+        .search-box:focus {
+          border-color: #e83e8c;
+          box-shadow: 0 4px 16px rgba(232,62,140,0.2);
+        }
+
+            #searchButton {
+              position: absolute;
+              top: 0;
+              right: 0;
+              height: 100%;
+              width: 50px;
+              background: linear-gradient(135deg, #6f42c1, #e83e8c);
+              color: #ffffff;
+              font-size: 16px;
+              border: none;
+              border-top-right-radius: 25px;
+              border-bottom-right-radius: 25px;
+              cursor: pointer;
+            }
+            #searchButton:hover {
+          opacity: 0.9;
+        }
+/*
+        #footer {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 70px;
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          z-index: 1000;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          padding-top: 10px;
+        }
+*/
+
+#footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:70px;
+  background:linear-gradient(135deg,#6f42c1,#e83e8c);
+  display:flex;
+  justify-content:center;
+  align-items: flex-start;
+  z-index:1000;
+  padding-top: 6px;
+}
+/* container 2 button */
+.dropdown-container{
+  display:flex;
+  align-items:flex-start;
+  gap: 150px;
+}
+
+.dropdown-btn,
+.walkinButton{
+  width:100px;
+  height:30px;
+  border:none;
+  border-radius:20px;
+  background:rgba(255,255,255,.2);
+  color:#fff;
+}
+
+
+        .floating-button-wrapper {
+          position: absolute;
+
+          top: -15px;              /* 🔥 naik atas footer */
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        #startButton {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: white;
+          color: #e83e8c;
+          font-size: 22px;
+          box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        }
+
+        #startButton i {
+          font-size: 26px;
+        }
+
+        #searchOption {
+          appearance: none;
+          background-color: transparent;
+          color: #fff;
+          padding: 0 15px;
+          border: none;
+          background: rgba(255,255,255,0.2);
+          border-radius: 20px;
+          font-size: 16px;
+          cursor: pointer;
+          height: 30px;
+          line-height: normal;
+          display: inline-block;
+          width: auto;
+          }
+        #searchOption option {
+          color: #000;
+        }
+        #searchOption:focus {
+           outline: none;
+           box-shadow: 0 0 0 0.2rem rgba(28, 49, 58, 0.5);
+        }
+        #searchButton:disabled {
+          background-color: #455A64; /* sama macam normal */
+          color: #ffffff;
+          cursor: not-allowed;
+          opacity: 1;
+        }
+
+
+        .result-item {
+        text-align: left;
+          border: none;
+          border-radius: 14px;
+          padding: 14px;
+          background: #fff;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+          transition: all 0.2s ease;
+        }
+
+        .result-item.selected {
+          border: 2px solid #28a745;
+          background: #eaf7ee;
+        }
+
+        /* category */
+        .result-item .category {
+          font-size: 13px;
+          color: #666;
+          font-weight: 600;
+        }
+
+        /* bib row */
+        .result-item .bib {
+          display: flex;
+          align-items: baseline;
+          gap: 10px;
+        }
+
+        /* bib number */
+        .result-item .bib-number {
+          font-size: 38px;
+          font-weight: 800;
+          line-height: 1;
+          color: #6f42c1;
+        }
+
+        /* name */
+        .result-item .name {
+          font-size: 14px;
+          font-weight: 700;
+          text-transform: uppercase;
+          color: #333;
+          letter-spacing: 0.5px;
+        }
+
+        /* size */
+        .result-item .bib-size {
+          font-size: 22px;
+          color: #555;
+          font-weight: 600;
+        }
+
+        .collect-box {
+          position: fixed;
+          bottom: 53px; /* sikit atas footer */
+          width: 100%;
+          left: -10px;
+          height:95px;
+          background: #ffffff;
+          border-top-right-radius: 30px;
+          border-top-left-radius: 30px;
+          padding: 10px;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+          z-index: 999;
+          display: none;
+        }
+
+        .collect-box .collect-button {
+        /*  width: calc(100% - 20px); */
+          margin-top: 10px;
+        /*  height: 35px; */
+        }
+
+        .collect-button-wrapper {
+          display: flex;
+          gap: 40px;
+          justify-content: center;
+        }
+
+        .collect-button {
+          flex: 1;
+          max-width: 150px;
+          height: 35px;
+          font-size: 16px;
+          padding: 5px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 25px;
+          cursor: pointer;
+          display: none;
+        }
+        .collect-button:disabled {
+          background-color: #9E9E9E; /* Grey */
+          cursor: not-allowed;
+          opacity: 0.8;
+        }
+        #holdButton {
+          min-width: 90px;
+          background: #ffc107;
+          color: #333;
+        }
+
+        .clear-button {
+          display: none;
+
+          position: absolute;
+          width: 100%;
+          top: 55px;   /* ✅ kekal */
+          left: 0;
+          text-align: center;
+          z-index: 10;
+        }
+
+        /* floating state */
+        .clear-button.floating {
+          position: fixed;
+          top: 40px;   /* 🔥 naik lagi rapat ke atas */
+          left: 50%;
+          transform: translateX(-50%);
+          width: auto;
+          z-index: 1000;
+        }
+
+        .icon-clear-button {
+          font-size: 13px;
+          width: 130px;
+          height: 32px;
+          padding: 5px;
+
+          cursor: pointer;
+
+          color: white;
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+
+          border-radius: 20px;
+          border: none;
+
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+          transition: all 0.2s ease;
+        }
+        .icon-clear-button:hover {
+          opacity: 0.9;
+        }
+
+        #collectBy1,
+        #collectBy2 {
+          height: 20px !important;
+          padding: 3px 8px !important;
+
+          border-radius: 14px;
+          border: 1px solid #ddd;
+
+          font-size: 12px;
+
+          outline: none;
+
+          transition: all 0.2s ease;
+        }
+
+        #collectBy1:focus,
+        #collectBy2:focus {
+          border-color: #e83e8c;
+          box-shadow: 0 2px 8px rgba(232,62,140,0.2);
+        }
+
+        .counter {
+          position: absolute;
+          font-size: 14px;
+          font-style: italic;
+          top: 80px;
+          left: 0; /* Terus di kiri container */
+          text-align: left;
+          padding-left: 10px; /* Jarak dari tepi kiri */
+          z-index: 10;
+        }
+        .collect-input {
+          width: 100px;
+          height: 24px;
+
+          font-size: 12px;
+          padding: 3px 8px;
+
+          margin-left: 5px;
+
+          border-radius: 14px;
+          border: 1px solid #ddd;
+
+          outline: none;
+          transition: all 0.2s ease;
+        }
+        .collect-input:focus {
+          border-color: #e83e8c;
+          box-shadow: 0 2px 6px rgba(232,62,140,0.2);
+        }
+
+        .hold-btn {
+          background: #ffc107;
+          color: #333;
+        }
+
+        .floating-select {
+          position: fixed;
+          bottom: 175px;
+          left: 50%;
+          transform: translateX(-50%);
+
+          padding: 10px 20px;
+          border-radius: 30px;
+          border: none;
+
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          color: #fff;
+
+          font-weight: 600;
+          font-size: 10px;
+
+          box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+
+          z-index: 999;
+          display: none;
+        }
+        .floating-select:hover {
+          opacity: 0.9;
+        }
+
+        .result-box {
+          margin: 65px auto 0;
+          width: 100%;
+          max-width: 345px;
+
+          display: flex;
+          flex-direction: column;
+          row-gap: 10px;
+        }
+
+
+        /**********************/
+
+
+        /* Modal Styles */
+        .modal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 1000; /* Sit on top */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: hidden; /* Disable scroll */
+          background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+        }
+
+        .modal-content {
+          position: relative; /* Relative positioning for content */
+          height: 100%; /* Full height */
+        }
+
+        .modal-body {
+          text-align: center; /* Center the QR reader */
+         // height: calc(100% - 60px); /* Adjust for footer height */
+          padding-top: 60px; /* Add padding for space above the scanner */
+        }
+
+        .back-button {
+          position: absolute; /* Position the back button */
+          top: 10px; /* Spacing from top */
+          left: 10px; /* Spacing from left */
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #fff; /* Change color to white */
+          font-size: 18px;
+          padding-top: 10px;
+          z-index: 1001; /* Ensure the back button is above other elements */
+        }
+
+            .torchToggle {
+              position: absolute;
+              top: 70px;
+              left: 50%;
+              transform: translateX(-50%);
+              z-index: 9999;
+              display: none;
+              width: 150px;
+              height: 45px;
+              cursor: pointer;
+              background-color: transparent;
+              color: white; // #455A64;
+              border: none; // solid 0.5px white; // #455A64;
+              border-radius: 5px;
+            }
+
+
+            .form-container {
+              margin-top: 5px;
+              position: relative;
+            }
+            .search-wrapper {
+              position: relative;
+              width: 350px;
+            }
+
+
+        .collected-info {
+          margin-top: 2px;
+          display: flex;
+          flex-direction: column;
+          gap: 1px;
+        }
+
+        .collected-info div {
+          font-size: 13px;
+          line-height: 1;
+        }
+
+        #message {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 9999;
+          display: none; /* 🚨 default sembunyi */
+        }
+
+        .status-box {
+          position: fixed; /* 🔥 tukar dari absolute */
+          top:34%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 90%;
+          max-width: 320px;
+          font-size: 18px;
+          font-weight: bold;
+          background: #ffffff;
+          border-radius: 16px;
+          padding: 16px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+          display: none;
+          z-index: 9999;
+          text-align: center;
+        }
+        .status-box p {
+          margin: 0;
+          font-size: 20px;
+        }
+        .ok-button {
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          padding: 6px 16px;
+          border: none;
+          border-radius: 20px;
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          color: white;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+          transition: all 0.2s ease;
+        }
+        .ok-button:hover {
+          opacity: 0.9;
+        }
+
+        /* hide footer semasa modal on */
+        .hide-footer {
+          display: none !important;
+        }
+/*
+            .dropdown-container {
+              position: absolute;
+              right: 50%;
+              transform: translateX(-65px);
+            }
+*/
+        /* Terapung kiri sikit dari tengah */
+        .showCollectedbutton {
+          position: absolute;
+          right: 10px;
+          background-color: transparent; //#007bff;
+          color: white;
+          border: none;
+          padding: 5px;
+          border-radius: 5px;
+          font-size: 16px;
+          cursor: pointer;
+        }
+/*
+        .walkinButton {
+          position: absolute;
+          right: 50px;
+          background-color: transparent;
+          color: white;
+          border: none;
+          padding: 5px;
+          border-radius: 5px;
+          font-size: 16px;
+          cursor: pointer;
+        }
+*/
+
+        /* ===== HOLD MODAL ===== */
+        .hold-modal {
+          display: none;
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.15); /* ringan, bukan hitam */
+          z-index: 9999;
+          justify-content: center;
+          align-items: flex-start; /* modal turun sikit dari top */
+          padding-top: 80px; /* jarak dari atas */
+        }
+
+        .hold-modal-box {
+          position: relative; /* untuk X button */
+          background: #ffffff;
+          width: 92%;
+          max-width: 420px;
+          border-radius: 14px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+          padding: 16px;
+          color: #222;
+          margin: 0 10px; /* padding kiri kanan untuk mobile */
+          box-sizing: border-box;
+        }
+
+        /* ===== HEADER ===== */
+        .hold-modal-header {
+          font-size: 16px;
+          font-weight: 600;
+          margin-bottom: 12px;
+          text-align: center;
+          color: #263238;
+        }
+
+        /* ===== GRID DISPLAY ===== */
+        .hold-grid {
+          display: flex;
+          flex-direction: column; /* baris ke bawah */
+          gap: 8px;
+          max-height: 50vh;
+          overflow-y: auto;
+        }
+
+        /* Setiap item dalam grid */
+        .hold-item {
+          display: block; /* ❗ buang grid */
+          padding: 10px 12px;
+          border-radius: 8px;
+          background: #f7f7f7;
+          border: 1px solid #e0e0e0;
+        }
+
+        .hold-row {
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+        }
+
+        /* ===== ITEM TEXT ===== */
+        .hold-name {
+          font-size: 14px;
+          color: #444;
+          margin-bottom: 6px;
+          text-align: left;
+        }
+
+        .hold-bib {
+          font-size: 16px;
+          font-weight: 700;
+          color: #000;
+        }
+
+        .hold-size {
+          font-size: 14px;
+          color: #555;
+          font-weight: 500;
+        }
+
+        /* ===== ACTION BUTTONS ===== */
+        .hold-modal-actions {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 16px;
+          gap: 10px; /* gap antara button */
+        }
+
+        .btn-cancel {
+          flex: 1;
+          background: #f1f3f5;   /* light neutral */
+          color: #555;
+          border: none;
+          border-radius: 20px;
+          padding: 10px 0;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .btn-collect {
+          flex: 1;
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          color: #fff;
+          border: none;
+          border-radius: 20px;
+          padding: 10px 0;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+          transition: all 0.2s ease;
+        }
+        .btn-cancel:hover,
+        .btn-collect:hover {
+          opacity: 0.9;
+        }
+
+        /* ===== CLOSE BUTTON ===== */
+        .hold-modal-close {
+          position: absolute;
+          top: 8px;
+          right: 10px;
+          font-size: 20px;
+          background: transparent;
+          border: none;
+          color: #555;
+          cursor: pointer;
+          font-weight: bold;
+        }
+        .hold-modal-close:hover {
+          color: #000;
+        }
+
+
+
+        /* ===== WALKIN BOX (IMPROVED) ===== */
+        .walkin-box {
+          position: fixed;
+          top: 10%;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 300px;
+          max-width: 92%;
+          background: #ffffff;
+          border: none;
+          border-radius: 16px;
+          padding: 16px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+          display: none;
+          z-index: 1000;
+          text-align: center;
+        }
+
+        /* Title */
+        .walkin-box h3 {
+          margin-top: 0;
+          margin-bottom: 15px;
+          font-weight: 700;
+          font-size: 18px;
+        }
+
+        /* Close button */
+        .walkin-box .close {
+          position: absolute;
+          right: 12px;
+          top: 10px;
+          font-size: 20px;
+          cursor: pointer;
+        }
+
+        /* Inputs */
+        .walkin-box input {
+          width: 90%;
+          margin: 5px auto;
+
+          padding: 7px;
+          border-radius: 8px;
+
+          border: 1px solid #ddd;
+
+          text-align: center;
+          font-size: 13px;
+        }
+
+        /* Bib + Chip row */
+        .bib-chip-row {
+          display: flex;
+          justify-content: center;
+          gap: 6px; /* tambah sikit spacing */
+          margin-top: 5px;
+        }
+
+        .bib-chip-row input {
+          width: 120px; /* kecil sikit */
+        }
+
+        /* Radio section */
+        .walkin-box label {
+          font-size: 14px;
+        }
+
+        /* Buttons */
+        .walkin-box button {
+          padding: 8px 14px;
+          font-size: 13px;
+          border: none;
+          border-radius: 20px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        /* Button row */
+        .walkin-box .btn-row {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 10px;
+        }
+
+        /* QR image */
+        #walkinQR {
+          width: 180px;   /* kecilkan sikit */
+          margin: 10px auto;
+        }
+
+        /* Loader */
+        #walkinLoader {
+          margin-top: 15px;
+        }
+
+        #walkinSubmitBtn {
+          background: linear-gradient(135deg, #6f42c1, #e83e8c);
+          color: white;
+        }
+        .walkin-box .btn-row button:last-child {
+          background: #eee;
+          color: #333;
+        }
+        .walkin-box button:hover {
+          opacity: 0.9;
+        }
+
+            .spin {
+              animation: spin 1s linear infinite;
+              display: inline-block;
+            }
+            @keyframes spin {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+/*
+
+.dropdown-btn {
+  width: 100px;
+  height: 30px;
+
+  padding: 0;
+  border-radius: 20px;
+  border: none;
+
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 14px;
+
+  text-align: center;
+}
+*/
+.dropdown-menu {
+  position: absolute;
+  bottom: 80px; /* 🔥 dropup */
+  left: 15%;
+  transform: translateX(-30%);
+  width: 130px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  display: none;
+  z-index: 2000;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.dropdown-item:hover {
+  background: #f5f5f5;
+}
+
+
+/* WALKIN DROPDOWN BUTTON FIX */
+#walkinDropdownBtn {
+  display: block;
+  width: 92%;
+  margin: 0 auto;
+
+  padding: 7px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+
+  background: #fff;
+  color: #333;
+
+  font-size: 13px;
+  text-align: center;
+}
+
+
+#walkinDropdownMenu {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width:70px;
+  bottom: 80px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  z-index: 2000;
+}
+
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+
+  align-items: center;   /* 🔥 center semua card */
+}
+
+.card-item {
+  width: 85%;            /* 🔥 kecilkan lebar */
+  max-width: 280px;      /* 🔥 limit supaya tak besar sangat */
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card-item .label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.card-item .value {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card-item.collected {
+  background: #eaf7ee;
+  color: #28a745;
+}
+
+.card-item.uncollected {
+  background: #fff3cd;
+  color: #856404;
+}
+    </style>
+
+</head>
+<body>
+<div id="uiBlocker"></div>
+<div id="globalSpinner">
+    <i class="bi bi-arrow-repeat spin"></i>
+</div>
+
+<div id="logoutMenu">
+
+    <div id="monitorBtn" onclick="goMonitor()" style="padding:10px; cursor:pointer;">
+        Monitor
+    </div>
+    <div id="adminBtn" onclick="goAdmin()" style="padding:10px; cursor:pointer;">
+        Admin
+    </div>
+    <div id="logoutMenuBtn" onclick="logoutFromMenu()" style="padding:10px; cursor:pointer; color:red;">
+        Logout
+    </div>
+</div>
+
+<div class="main-wrapper">
+<!------------- BODY SECTION ------------->
+
+    <div class="top-header">
+        <div class="profile-display" id="profileNameDisplay" style="font-size: 18px; color:#455A64; font-weight: bold;">
+            <i class="bi bi-person-badge"></i> <span id="userProfile"></span>
+        </div>
+
+        <!-- ON HOLD button (hidden by default) -->
+        <div id="onHoldContainer" style="display:none;">
+            <button
+                    type="button"
+                    id="onHoldButton"
+                    onclick="openHoldModal()"
+                    style="
+    font-size:12px;
+    padding:4px 8px;
+    border-radius:12px;
+    background:#fff3cd;
+    border:1px solid #ffe69c;
+    cursor:pointer;
+    height: 24px;       /* pastikan sama tinggi dengan line-height text */
+    display: flex;
+    align-items: center;
+  "
+            >(0)</button>
+
+        </div>
+
+        <button id="logoutBtn" type="button" onclick="handleLogoutClick()" style="font-size: 18px; background-color: transparent; color:#455A64; border: none; cursor: pointer">
+            <i class="bi bi-box-arrow-right" style="font-size: 22px"></i>
+        </button>
+    </div>
+    <div style="text-align: center;">
+
+    <h1 style="font-size:30px; font-style: italic; text-align:center;">FyRPC</h1>
+
+    <form style="text-align: left; display: inline-block; position: relative;">
+
+        <!-- Form Container -->
+        <div class="search-wrapper">
+            <input type="text" id="searchTerm" class="search-box" placeholder="Reg ID, MyKad or Name" onkeydown="handleEnter(event)">
+            <button type="button" id="searchButton" onclick="search()">
+                <i class="bi bi-search"></i></button>
+        </div>
+        <!-- Clear Button -->
+        <div id="clearButtonContainer" class="clear-button">
+            <button type="button" onclick="clearSearch()" class="icon-clear-button">
+                <i class="bi bi-eraser-fill"></i> Clear
+            </button>
+        </div>
+        <div id="resultCount" class="counter"></div>
+    </form>
+
+    <div id="message"></div>
+    <div id="result" class="result-box"></div>
+    <br>
+
+    <button id="selectAllBtn" class="floating-select">Select All</button>
+
+    <div id="collectBoxes" class="collect-box">
+        collect by
+        <input type="text" id="collectBy1" placeholder="Name" style="width: 100px; height: 10px; font-size: 12px; padding: 5px; margin-left: 5px;"
+               oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '');">
+
+        <input type="tel" id="collectBy2" placeholder="Phone Number" style="width: 100px; height: 10px; font-size: 12px; padding: 5px; margin-left: 5px;"
+               oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+
+        <br>
+
+        <div class="collect-button-wrapper">
+            <input type="button" id="holdButton" value="Hold" onclick="holdSelection()" class="collect-button" style="background:#FF9800;">
+            <input type="button" id="collectButton" value="Collect" onclick="collect()" class="collect-button">
+        </div>
+    </div>
+
+    <br><br><br><br><br>
+
+    <div id="collectedStatusContainer" class="status-box">
+        <div id="collectedStatus"></div>
+        <br>
+        <button id="okButton" class="ok-button" onclick="dismissCollectedStatus()">OK</button>
+    </div>
+
+    <div id="holdModal" class="hold-modal">
+        <div class="hold-modal-box">
+            <div class="hold-modal-header">
+                <b>HOLD ITEMS</b>
+                <button class="hold-modal-close" onclick="closeHoldModal()">&times;</button>
+            </div>
+
+            <div id="holdList" class="hold-grid"></div>
+
+            <div id="holdActions" class="hold-modal-actions">
+                <button id="modalRemoveBtn" onclick="removeHold()" class="btn-cancel">REMOVE</button>
+                <button id="modalCollectBtn" onclick="collectHold()" class="btn-collect">COLLECT</button>
+                <button id="modalOkBtn" onclick="closeHoldModal()" class="btn-collect" style="display:none;">OK</button>
+            </div>
+
+            <div id="holdCollectedMsg" style="display:none; text-align:center; margin-top:12px; font-weight:600; color:#4CAF50;">
+                COLLECTED
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div class="dropdown-container">
+            <div class="dropdown">
+                <button id="searchDropdownBtn" class="dropdown-btn">IC/ID/Name</button>
+
+                <div class="dropdown-menu">
+                    <div class="dropdown-item" onclick="setOption('DEFAULT','IC/ID/Name')">IC/ID/Name</div>
+                    <div class="dropdown-item" onclick="setOption('A','Team')">Team</div>
+                    <div class="dropdown-item" onclick="setOption('E','Email')">Email</div>
+                    <div class="dropdown-item" onclick="setOption('F','BIB no')">BIB no</div>
+                    <div class="dropdown-item" onclick="setOption('G','Collected')">Collected</div>
+                </div>
+            </div>
+
+            <input type="hidden" id="searchOption" value="DEFAULT">
+
+            <button id="walkinButton" class="walkinButton" type="button" onclick="openWalkinForm()">
+                Add Runner
+            </button>
+        </div>
+
+        <div class="floating-button-wrapper">
+            <button id="startButton" onclick="openScanner()">
+                <i class="bi bi-qr-code-scan"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- WALKIN FORM -->
+    <div id="walkinFormBox" class="walkin-box">
+        <span class="close" onclick="closeWalkinForm()">&times;</span>
+        <h3>Add New Runner</h3>
+
+        <div id="walkinFields">
+            <input type="tel" id="walkinIC" placeholder="No IC" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+            <input type="text" id="walkinName" placeholder="Name" style="text-transform: uppercase; margin-top: 10px;" />
+            <input type="tel" id="walkinContact" placeholder="Contact" style="margin-top: 10px;"
+                   oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+
+            <div class="bib-chip-row">
+                <input type="text" id="walkinBib" placeholder="BIB No"
+                       oninput="this.value=this.value.toUpperCase().replace(/[^0-9ABCDEFGKS/() ]/g,'')" />
+                <input type="tel" id="walkinChip" placeholder="Chip No"
+                       oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+            </div>
+
+            <input type="text" id="walkinEmer" placeholder="Emergency Name / Phone"
+                   style="margin-top: 10px;" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9/ ]/g,'')" />
+
+            <div style="margin-top:20px;">
+                <label style="font-weight:600; display:block; margin-bottom:4px;">Category:</label>
+
+                <div class="dropdown">
+                    <button id="walkinDropdownBtn" class="dropdown-btn" style="width:92%; margin:auto;">
+                        Select Category
+                    </button>
+                    <div id="walkinDropdownMenu" class="dropdown-menu" style="width:92%;"></div>
+                </div>
+
+                <select id="walkinDistance" style="display:none;"></select>
+            </div>
+        </div>
+
+        <div id="walkinError" style="color:red; font-weight:bold; display:none; margin-top:5px; margin-bottom: 5px;"></div>
+
+        <div id="confirmPreview" style="display:none; text-align:center; margin-bottom:15px;">
+            <div style="font-weight:bold; margin-bottom:8px;">ADD THIS RUNNER?</div>
+            <div>NAME: <b id="previewName"></b></div>
+            <div style="font-size:22px; margin-top:5px;">BIB: <b id="previewBib"></b></div>
+        </div>
+
+        <br>
+
+        <div class="btn-row">
+            <button id="walkinSubmitBtn" onclick="submitWalkinForm()">SUBMIT</button>
+            <button onclick="handleCancel()">CANCEL</button>
+        </div>
+
+        <div id="walkinLoader" style="display:none; text-align:center; margin-top:15px;">
+            <i class="bi bi-arrow-repeat spin" style="font-size:40px; color:#000;"></i>
+        </div>
+    </div>
+
+    <div id="successBox" class="walkin-box" style="display:none;">
+        <h3>Successfull Added</h3>
+        <p><b><span id="successBib" style="font-size:40px;"></span></b></p>
+        <p><b><span id="successName" style="font-size:20px;"></span></b></p>
+        <br>
+        <button onclick="closeSuccessBox()">OK</button>
+    </div>
+    </div>
+
+    <audio id="markSound" src="sounds/collected.mp3" preload="auto"></audio>
+    <audio id="warnSound" src="sounds/warning.mp3" preload="auto"></audio>
+    <audio id="successSound" src="sounds/tada.mp3" preload="auto"></audio>
+</div>
+
+<script>
+   //  const API_URL = window.API_URL;
+
+  WORKER_API = "https://fyrpc.iamfyrus.workers.dev";
+
+function loadSummaryCard() {
+
+ fetch(`${WORKER_API}/summary`)
+  .then(r=>r.json())
+  .then(data=>{
+
+    document.getElementById('result').innerHTML = `
+      <div class="summary-card">
+
+        <div class="card-item">
+          <div class="label">TOTAL PARTICIPANT</div>
+          <div class="value">${data.total}</div>
+        </div>
+
+        <div class="card-item collected">
+          <div class="label">COLLECTED</div>
+          <div class="value">${data.collected}</div>
+        </div>
+
+        <div class="card-item uncollected">
+          <div class="label">BALANCE</div>
+          <div class="value">${data.balance}</div>
+        </div>
+
+      </div>
+    `
+
+  })
+
+}
+
+function showLoader() {
+  const spinner = document.getElementById("globalSpinner");
+  if (spinner) spinner.style.display = "flex";
+  blockUI(true);
+}
+
+function hideLoader() {
+  const spinner = document.getElementById("globalSpinner");
+  if (spinner) spinner.style.display = "none";
+  blockUI(false);
+}
+
+function blockUI(state) {
+  const blocker = document.getElementById("uiBlocker");
+  if (blocker) {
+    blocker.style.display = state ? "block" : "none";
+  }
+}
+
+      // ===== On load: papar nama segera dari localStorage =====
+window.onload = function() {
+loadSummaryCard();
+  const cachedProfile = localStorage.getItem('userProfile');
+  const token = localStorage.getItem('sessionToken');
+
+  if (cachedProfile && token) {
+    document.getElementById('userProfile').textContent = cachedProfile.toUpperCase();
+
+    fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "validate",
+        token: token
+      })
+    })
+    .then(res => res.json())
+    .then(res => {
+      if (!res.valid) {
+        alert("Session expired");
+        localStorage.clear();
+        loadLogin();
+      }
+
+      hideLoader();
+    })
+    .catch(() => {
+      hideLoader(); // fallback
+    });
+
+  } else {
+    loadLogin();
+  }
+
+  updateOnHoldButton();
+  syncCollectButton();
+};
+
+      window.addEventListener('storage', function(e) {
+        if (e.key === 'sessionToken' && !e.newValue) {
+          loadLogin(); // 🔥 terus pergi login page
+        }
+      });
+
+        // --------- placeholder update
+
+        function updatePlaceholder() {
+          const option = document.getElementById("searchOption").value;
+          const input = document.getElementById("searchTerm");
+
+          let placeholderText = "";
+
+          switch (option) {
+            case "A":
+              placeholderText = "Enter Team Name";
+              break;
+            case "E":
+              placeholderText = "Enter full email";
+              break;
+            case "F":
+              placeholderText = "Enter BIB number";
+              break;
+            case "G":
+              placeholderText = "Reg ID, MyKad, Name, Bib";
+              break;
+            default:
+              placeholderText = "Reg ID, MyKad or Name";
+          }
+
+          input.placeholder = placeholderText;
+        }
+
+
+
+        // Helper: disable/enable semua button di page
+        function setAllButtonsDisabled(state) {
+          const buttons = document.querySelectorAll("button, input[type=button]");
+          buttons.forEach(btn => btn.disabled = state);
+        }
+
+
+        // NEW SEARCH ALERT EMPTY SEARCH
+        function search(customValue) {
+          var input = getActiveSearchInput();
+          input.blur();
+          var searchTerm = customValue || input.value.trim();
+          var searchOption = document.getElementById('searchOption').value;
+          var searchButton = document.getElementById('searchButton');
+
+          if (searchTerm === "") {
+            document.getElementById("result").innerHTML = "<span style='color:red;'>Please enter something to search.</span>";
+            document.getElementById('clearButtonContainer').style.display = 'none';
+            document.getElementById('collectBoxes').style.display = 'none';
+            return;
+          }
+
+          setAllButtonsDisabled(true);
+          blockUI(true);
+          searchButton.innerHTML = '<i class="bi bi-arrow-repeat spin" style="font-size:25px; opacity:0.8;"></i>';
+
+          fetch(`${WORKER_API}/search?ic=${encodeURIComponent(searchTerm)}&mode=${searchOption}`)
+            .then(res => res.text())
+            .then(html => {
+
+              showResult(html);
+
+              // ✅ RESET UI DALAM .then
+              setAllButtonsDisabled(false);
+              blockUI(false);
+              searchButton.innerHTML = '<i class="bi bi-search"></i>';
+
+            })
+            .catch(() => {
+
+              document.getElementById("result").innerHTML =
+                "<span style='color:red;'>No internet connection</span>";
+
+              setAllButtonsDisabled(false);
+              blockUI(false);
+              searchButton.innerHTML = '<i class="bi bi-search"></i>';
+
+            });
+
+          firstSearchDone = true;
+        }
+
+
+
+        // ------- Collect function
+function collect() {
+
+  // 🚫 block kalau ada HOLD
+  if (hasHold()) {
+    const warnSound = document.getElementById('warnSound');
+    warnSound.currentTime = 0;
+    warnSound.play();
+
+    const msg = document.getElementById('message');
+    if (msg) {
+      msg.innerHTML = `
+        <div style="
+          padding:12px;
+          border:2px solid red;
+          background:#fff;
+          color:red;
+          font-weight:bold;
+          text-align:center;
+          box-shadow:0 4px 12px rgba(0,0,0,0.3);
+        ">
+          YOU HAVE HOLD DATA
+        </div>
+      `;
+      msg.style.display = 'block';
+
+      setTimeout(() => {
+        msg.innerHTML = '';
+        msg.style.display = 'none';
+      }, 3000);
+    }
+
+    return;
+  }
+
+  var collectButton = document.getElementById('collectButton');
+  var selected = document.querySelectorAll('.result-item.selected');
+  var markedRows = [];
+  var collectBy1 = document.getElementById('collectBy1').value.trim();
+  var collectBy2 = document.getElementById('collectBy2').value.trim();
+  var markSound = document.getElementById('markSound');
+  var warnSound = document.getElementById('warnSound');
+  var userProfile = localStorage.getItem('userProfile') || '';
+  var resultContainer = document.getElementById('result');
+  var messageContainer = document.getElementById('message');
+
+  // ❌ VALIDATION (isi separuh)
+  if ((collectBy1 && !collectBy2) || (!collectBy1 && collectBy2)) {
+    messageContainer.innerHTML =
+      '<div style="padding:10px; border:1px solid red; color:red; font-weight:bold; background:white; box-shadow:0 4px 12px rgba(0,0,0,0.2);">User ERROR woi!</div>';
+    messageContainer.style.display = 'block';
+
+    warnSound.play();
+    collectButton.value = 'Collect';
+    setAllButtonsDisabled(false);
+    return;
+  } else {
+    messageContainer.innerHTML = '';
+  }
+
+  // 🔒 disable UI
+  setAllButtonsDisabled(true);
+  collectButton.value = 'Collecting...';
+
+  // 📦 collect selected rows
+  selected.forEach(el => {
+    markedRows.push({
+      row: el.dataset.row,
+      collectBy1: collectBy1,
+      collectBy2: collectBy2,
+      userProfile: userProfile
+    });
+  });
+
+  // ❌ no selection
+  if (markedRows.length === 0) {
+    collectButton.value = 'Collect';
+    setAllButtonsDisabled(false);
+    return;
+  }
+
+  // 🚀 API CALL (COLLECT)
+fetch(`${WORKER_API}/collect`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    rows: markedRows.map(r => ({
+      row: r.row,
+      user: r.userProfile,
+      collectBy: `${r.collectBy1 || ""} ${r.collectBy2 || ""}`.trim()
+    }))
+  })
+})
+.then(res => res.json())
+.then(res => {
+
+  // ✅ success message
+  resultContainer.innerHTML =
+    '<div style="padding:10px; border:1px solid green; color:green; font-weight:bold;">✅ SUCCESS</div>';
+
+  markSound.play();
+
+  // 🔥 CLEAR UI
+  document.getElementById('collectBoxes').style.display = 'none';
+  document.getElementById('clearButtonContainer').style.display = 'none';
+  document.getElementById('resultCount').style.display = 'none';
+  document.getElementById('searchTerm').value = '';
+  document.getElementById('selectAllBtn').style.display = 'none';
+
+  setTimeout(() => {
+    resultContainer.innerHTML = '';
+    loadSummaryCard();
+  }, 7000);
+
+  collectButton.value = 'Collect';
+  setAllButtonsDisabled(false);
+
+})
+.catch(err => {
+
+  console.log("COLLECT ERROR:", err);
+
+  resultContainer.innerHTML =
+    "<span style='color:red;'>Collect failed</span>";
+
+  collectButton.value = 'Collect';
+  setAllButtonsDisabled(false);
+});
+}
+
+function showCollectedStatus() {
+
+  var showCollected = document.getElementById('showCollected');
+  var icon = document.getElementById('showCollectedIcon');
+
+  icon.className = 'bi bi-arrow-repeat spin';
+
+  // 🔥 RESET UI
+  document.getElementById('searchTerm').value = '';
+  document.getElementById('result').innerHTML = '';
+  document.getElementById('resultCount').innerHTML = '';
+  document.getElementById('collectBy1').value = '';
+  document.getElementById('collectBy2').value = '';
+  document.getElementById('collectBoxes').style.display = 'none';
+  document.getElementById('collectButton').style.display = 'none';
+  document.getElementById('selectAllBtn').style.display = 'none';
+  document.getElementById('clearButtonContainer').style.display = 'none';
+
+  showCollected.disabled = true;
+  blockUI(true);
+
+  // 🚀 FETCH VERSION
+fetch(`${WORKER_API}/status`)
+  .then(res => res.text())
+  .then(statusMessage => {
+
+    displayStatus(statusMessage);
+
+    showCollected.disabled = false;
+    blockUI(false);
+    icon.className = 'bi bi-journal-text';
+
+  })
+  .catch(err => {
+
+    console.log("STATUS ERROR:", err);
+
+    document.getElementById('result').innerHTML =
+      "<span style='color:red;'>Failed to load status</span>";
+
+    showCollected.disabled = false;
+    blockUI(false);
+    icon.className = 'bi bi-journal-text';
+  });
+}
+
+
+        // ------- Show search & collect result
+        function showResult(result) {
+          document.getElementById('result').innerHTML = result;
+
+          // 🔥 enable tap select
+          document.querySelectorAll('.result-item.selectable').forEach(card => {
+            card.addEventListener('click', function () {
+              this.classList.toggle('selected');
+            });
+          });
+
+          document.getElementById('resultCount').style.display = 'block';
+
+          if (hasHold()) {
+            document.getElementById('collectButton').disabled = true;
+          }
+
+          // 🔢 counter
+          var count = document.getElementsByClassName('result-item').length;
+          document.getElementById('resultCount').textContent = "Find: " + count;
+
+          var items = document.getElementsByClassName('result-item');
+          var selectAllBtn = document.getElementById('selectAllBtn');
+          var searchOption = document.getElementById('searchOption').value;
+
+         if (items.length > 0 && searchOption !== 'G') {
+           // 🔥 NORMAL MODE (boleh collect)
+           selectAllBtn.style.display = 'flex';
+
+           document.getElementById('collectBoxes').style.display = 'block';
+           document.getElementById('collectButton').style.display = 'inline-block';
+           document.getElementById('holdButton').style.display = 'inline-block';
+
+         } else {
+           // 🔥 G MODE atau kosong
+           selectAllBtn.style.display = 'none';
+
+           document.getElementById('collectBoxes').style.display = 'none';
+           document.getElementById('collectButton').style.display = 'none';
+           document.getElementById('holdButton').style.display = 'none';
+         }
+
+          if (result) {
+            document.getElementById('clearButtonContainer').style.display = 'block';
+          } else {
+            document.getElementById('clearButtonContainer').style.display = 'none';
+            loadSummaryCard();
+          }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+          const btn = document.getElementById('selectAllBtn');
+          if (!btn) return;
+
+          btn.addEventListener('click', function () {
+            const cards = document.querySelectorAll('.result-item.selectable');
+            const selected = document.querySelectorAll('.result-item.selected');
+
+            const allSelected = cards.length === selected.length;
+
+            cards.forEach(card => {
+              card.classList.toggle('selected', !allSelected);
+            });
+
+            this.textContent = allSelected ? "Select All" : "Unselect All";
+          });
+        });
+
+        function clearSearch() {
+          document.getElementById('searchTerm').value = '';
+          document.getElementById('result').innerHTML = '';
+          document.getElementById('resultCount').innerHTML = '';
+          document.getElementById('collectBy1').value = '';
+          document.getElementById('collectBy2').value = '';
+          document.getElementById('collectBoxes').style.display = 'none';
+          document.getElementById('collectButton').style.display = 'none';
+          document.getElementById('selectAllBtn').style.display = 'none';
+          hideLoader();
+          document.getElementById('clearButtonContainer').style.display = 'none';
+
+          // 🚨 Clear warning/success message sekali
+          var messageContainer = document.getElementById('message');
+          if (messageContainer) {
+            messageContainer.innerHTML = '';
+            messageContainer.style.display = 'none'; // sembunyi box
+          }
+
+          firstSearchDone = false;
+          loadSummaryCard();
+        }
+
+        // ---- hold function
+        function hasHold() {
+          const hold = getHoldData();
+          return !!(hold && hold.rows && hold.rows.length > 0);
+        }
+
+        function getHoldData() {
+          return JSON.parse(localStorage.getItem('holdData') || '[]');
+        }
+        function setHoldData(data) {
+          localStorage.setItem('holdData', JSON.stringify(data));
+        }
+
+        function openHoldModal() {
+
+          const holdData = getHoldData();
+          if (!holdData || holdData.rows.length === 0) return;
+
+          const spinner = document.getElementById("globalSpinner");
+          spinner.style.display = "flex";
+
+          const rows = holdData.rows.map(d => d.row);
+
+         fetch(`${WORKER_API}/hold`, {
+           method: "POST",
+           headers: {
+             "Content-Type": "application/json"
+           },
+           body: JSON.stringify({
+             rows: rows
+           })
+         })
+         .then(res => res.text())
+         .then(resultHtml => {
+
+           const holdListEl = document.getElementById('holdList');
+           holdListEl.innerHTML = '';
+
+           const temp = document.createElement('div');
+           temp.innerHTML = resultHtml;
+
+           if (holdData.rows.length > 1) {
+
+             Array.from(temp.querySelectorAll('.hold-item')).forEach((item) => {
+
+               const rowId = item.getAttribute("data-row");
+
+               const wrapper = document.createElement('div');
+               wrapper.style.position = 'relative';
+
+               const closeBtn = document.createElement('button');
+               closeBtn.innerHTML = '&times;';
+               closeBtn.style = `
+                 position:absolute;
+                 top:5px;
+                 right:5px;
+                 border:none;
+                 background:transparent;
+                 color:#999;
+                 font-size:16px;
+                 cursor:pointer;
+               `;
+
+               closeBtn.onclick = function() {
+                 removeSingleHold(rowId);
+               };
+
+               wrapper.appendChild(closeBtn);
+               wrapper.appendChild(item);
+
+               holdListEl.appendChild(wrapper);
+             });
+
+           } else {
+             holdListEl.innerHTML = resultHtml;
+           }
+
+           if (holdData.collectBy1 || holdData.collectBy2) {
+             const collectBox = document.createElement('div');
+             collectBox.style = `
+               margin-top:10px;
+               padding:8px;
+               background:#f5f5f5;
+               border:1px dashed #ccc;
+               border-radius:5px;
+               font-size:13px;
+             `;
+
+             collectBox.innerHTML = `
+               Collect by:
+               <b>${holdData.collectBy1 || '—'}</b>
+               ${holdData.collectBy2 ? `(${holdData.collectBy2})` : ''}
+             `;
+
+             holdListEl.appendChild(collectBox);
+           }
+
+           document.getElementById('holdModal').style.display = 'flex';
+           document.body.classList.add("modal-open");
+
+           spinner.style.display = "none";
+
+         })
+         .catch(err => {
+
+           console.log("HOLD ERROR:", err);
+
+           document.getElementById('holdList').innerHTML =
+             "<span style='color:red;'>Failed to load hold data</span>";
+
+           document.getElementById('holdModal').style.display = 'flex';
+           document.body.classList.add("modal-open");
+
+           spinner.style.display = "none";
+         });
+         }
+
+
+        function removeHold() {
+            localStorage.removeItem('holdData');
+            document.getElementById('holdModal').style.display = 'none';
+            document.body.classList.remove("modal-open");
+            document.getElementById('holdButton').value = 'Hold';
+
+            updateOnHoldButton();
+          syncCollectButton(); // 🔴 PENTING
+        }
+
+        function removeSingleHold(rowId) {
+
+          let holdData = getHoldData();
+          if (!holdData || !holdData.rows) return;
+
+          holdData.rows = holdData.rows.filter(r => r.row !== rowId);
+
+          if (holdData.rows.length === 0) {
+            localStorage.removeItem('holdData');
+            closeHoldModal();
+          } else {
+            setHoldData(holdData);
+            openHoldModal(); // refresh modal
+          }
+
+          document.getElementById('holdButton').value =
+            holdData.rows.length ? `Hold (${holdData.rows.length})` : 'Hold';
+
+          updateOnHoldButton();
+          syncCollectButton();
+        }
+
+
+        function collectHold() {
+
+          const holdData = getHoldData();
+          if (!holdData || holdData.rows.length === 0) return;
+
+          const btn = document.getElementById('modalCollectBtn');
+          btn.disabled = true;
+
+          const userProfile = localStorage.getItem('userProfile') || '';
+          const markSound = document.getElementById('markSound');
+
+          const markedRows = holdData.rows.map(d => ({
+            row: d.row,
+            collectBy1: holdData.collectBy1 || '',
+            collectBy2: holdData.collectBy2 || '',
+            userProfile
+          }));
+
+          showLoader();
+
+          fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify({
+              action: "collect",
+              rows: markedRows
+            })
+          })
+          .then(res => res.json())
+          .then(() => {
+
+            hideLoader();
+            markSound.play();
+
+            // 🔥 UI SUCCESS (maintain original)
+            document.getElementById('modalRemoveBtn').style.display = 'none';
+            document.getElementById('modalCollectBtn').style.display = 'none';
+
+            const holdList = document.getElementById('holdList');
+            holdList.innerHTML = `
+              <div style="padding:10px;border:1px solid green;background:#e8f5e9;
+                color:#2e7d32;font-weight:bold;text-align:center;margin-bottom:8px;">
+                SUCCESSFULL
+              </div>
+              ${holdList.innerHTML}
+            `;
+
+            const okBtn = document.getElementById('modalOkBtn');
+            okBtn.style.display = 'inline-block';
+
+            okBtn.onclick = function() {
+              document.getElementById('holdModal').style.display = 'none';
+              document.body.classList.remove("modal-open");
+
+              removeHold(); // 🔥 clear local hold
+
+              okBtn.style.display = 'none';
+              document.getElementById('modalRemoveBtn').style.display = 'inline-block';
+              document.getElementById('modalCollectBtn').style.display = 'inline-block';
+            //  loadSummaryCard();
+            };
+
+          })
+          .catch(err => {
+
+          btn.disabled = false;
+
+            console.log("COLLECT HOLD ERROR:", err);
+
+            hideLoader();
+
+            document.getElementById('holdList').innerHTML =
+              "<span style='color:red;'>Collect hold failed</span>";
+          });
+        }
+
+        function holdSelection() {
+
+          const selected = document.querySelectorAll('.result-item.selected');
+          const holdData = getHoldData();
+
+          const hasExistingHold = holdData && holdData.rows && holdData.rows.length > 0;
+
+          // ✅ CASE 1: TAK ADA tick → buka modal kalau ada hold
+          if (selected.length === 0) {
+            if (hasExistingHold) {
+              openHoldModal();
+            }
+            return;
+          }
+
+          // ✅ CASE 2: ADA tick → tambah hold
+          const collectBy1 = document.getElementById('collectBy1').value.trim();
+          const collectBy2 = document.getElementById('collectBy2').value.trim();
+
+          const newRows = [];
+          selected.forEach(el => {
+            newRows.push({ row: el.dataset.row });
+          });
+
+          let existing = holdData;
+          if (!existing || !existing.rows) {
+            existing = { rows: [], collectBy1: '', collectBy2: '' };
+          }
+
+          const existingRowIds = new Set(existing.rows.map(r => r.row));
+
+          newRows.forEach(r => {
+            if (!existingRowIds.has(r.row)) {
+              existing.rows.push(r);
+            }
+          });
+
+          existing.collectBy1 = collectBy1 || existing.collectBy1;
+          existing.collectBy2 = collectBy2 || existing.collectBy2;
+
+          setHoldData(existing);
+
+          // clear input
+          document.getElementById('collectBy1').value = '';
+          document.getElementById('collectBy2').value = '';
+
+          // update UI
+          document.getElementById('holdButton').value =
+            `Hold (${existing.rows.length})`;
+
+          syncCollectButton();
+          updateOnHoldButton();
+        }
+
+
+        function updateOnHoldButton() {
+          const holdData = getHoldData();
+
+          if (!holdData || !holdData.rows || holdData.rows.length === 0) {
+            document.getElementById('onHoldContainer').style.display = 'none';
+            return;
+          }
+
+          document.getElementById('onHoldButton').innerText =
+            `HOLD (${holdData.rows.length})`;
+
+          document.getElementById('onHoldContainer').style.display = 'block';
+        }
+
+        function syncCollectButton() {
+          const btn = document.getElementById('collectButton');
+          const msg = document.getElementById('message');
+          if (!btn) return;
+
+          if (hasHold()) {
+            btn.disabled = true;
+            if (msg) {
+              msg.innerHTML =
+                '<div style="color:red;font-weight:bold;">❌ CLEAR HOLD FIRST</div>';
+            }
+          } else {
+            btn.disabled = false;
+            if (msg) msg.innerHTML = '';
+          }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+          const holdData = getHoldData();
+          if (holdData?.rows?.length > 0) {
+            document.getElementById('holdButton').value =
+              `Hold (${holdData.rows.length})`;
+            document.getElementById('collectButton').disabled = true;
+            updateOnHoldButton();
+          }
+        });
+
+
+        function closeHoldModal() {
+          document.getElementById('holdModal').style.display = 'none';
+          document.body.classList.remove("modal-open");
+          // jangan clear data di holdList
+        }
+
+
+        // Function to display the collected status in the container
+        function displayStatus(statusMessage) {
+          var collectedStatusContainer = document.getElementById('collectedStatusContainer');
+          var collectedStatus = document.getElementById('collectedStatus');
+
+          // inject content
+          collectedStatus.innerHTML = statusMessage;
+
+          // 🔥 FIX UTAMA (container tak stretch)
+          collectedStatus.style.height = 'auto';
+          collectedStatus.style.maxHeight = '80vh';
+          collectedStatus.style.overflowY = 'auto';
+
+          collectedStatusContainer.style.display = 'block';
+        }
+
+        // Function to dismiss the collected status when OK is clicked
+        function dismissCollectedStatus() {
+          var collectedStatusContainer = document.getElementById('collectedStatusContainer');
+          collectedStatusContainer.style.display = 'none'; // Hide the status box
+          document.getElementById('collectedStatus').innerHTML = ''; // Clear the status content
+        }
+
+
+function submitWalkinForm() {
+
+  const name = document.getElementById("walkinName").value.trim().toUpperCase();
+  const bib = document.getElementById("walkinBib").value.trim().toUpperCase();
+  const errorBox = document.getElementById("walkinError");
+  const warnSound = document.getElementById('warnSound');
+  const btn = document.getElementById('walkinSubmitBtn');
+
+  const qr = document.getElementById("walkinQR");
+
+  // =============================
+  // STEP 1: VALIDATE DULU
+  // =============================
+  if (!confirmMode) {
+
+    if (!name || !bib) {
+      errorBox.style.display = "block";
+      errorBox.innerText = "Name & BIB required";
+
+      if (warnSound) {
+        warnSound.currentTime = 0;
+        warnSound.play();
+      }
+      return; // 🔥 STOP sini (jangan hide form)
+    }
+
+    errorBox.style.display = "none";
+
+    // =============================
+    // STEP 2: BARU MASUK CONFIRM MODE
+    // =============================
+    document.getElementById("walkinFields").style.display = "none";
+
+    if (qr) qr.style.display = "none";
+
+    document.getElementById("previewName").innerText = name;
+    document.getElementById("previewBib").innerText = bib;
+    document.getElementById("confirmPreview").style.display = "block";
+
+    btn.innerText = "CONFIRM";
+    confirmMode = true;
+
+    return;
+  }
+
+  // =============================
+  // STEP 3: CONFIRM → API
+  // =============================
+  confirmWalkin();
+}
+
+function loadWalkinCategories() {
+
+  const select = document.getElementById("walkinDistance");
+  const btn = document.getElementById("walkinDropdownBtn");
+  const menu = document.getElementById("walkinDropdownMenu");
+  const submitBtn = document.getElementById("walkinSubmitBtn");
+
+  select.innerHTML = `<option>Updating...</option>`;
+  btn.innerText = "Updating...";
+  submitBtn.disabled = true;
+
+fetch(`${WORKER_API}/walkin-categories`)
+  .then(res => res.json())
+  .then(res => {
+
+    if (!res.enabled || !res.categories.length) {
+      select.innerHTML = `<option>NOT AVAILABLE</option>`;
+      menu.innerHTML = `<div class="dropdown-item">NOT AVAILABLE</div>`;
+      btn.innerText = "NOT AVAILABLE";
+      submitBtn.disabled = true;
+      return;
+    }
+
+    select.innerHTML = "";
+    menu.innerHTML = "";
+
+    let firstValid = null;
+
+    res.categories.forEach(cat => {
+
+      // 👉 ORIGINAL SELECT (UNCHANGED)
+      const opt = document.createElement("option");
+      opt.value = cat.value;
+      opt.textContent = cat.label;
+      if (cat.disabled) opt.disabled = true;
+      select.appendChild(opt);
+
+      // 👉 UI DROPDOWN
+      const div = document.createElement("div");
+      div.className = "dropdown-item";
+      div.textContent = cat.label;
+
+      if (cat.disabled) {
+        div.style.opacity = "0.4";
+      } else {
+        if (!firstValid) firstValid = cat;
+
+        div.onclick = function () {
+          btn.innerText = cat.label;
+          select.value = cat.value; // 🔥 sync dengan original
+          menu.classList.remove("show");
+        };
+      }
+
+      menu.appendChild(div);
+    });
+
+    // 🔥 default selection
+    if (firstValid) {
+      btn.innerText = firstValid.label;
+      select.value = firstValid.value;
+    }
+
+    const allDisabled = res.categories.every(c => c.disabled);
+    submitBtn.disabled = allDisabled;
+
+  })
+  .catch(() => {
+    select.innerHTML = `<option>ERROR</option>`;
+    menu.innerHTML = `<div class="dropdown-item">ERROR</div>`;
+    btn.innerText = "ERROR";
+    submitBtn.disabled = true;
+  });
+}
+
+let confirmMode = false;
+
+function confirmWalkin() {
+
+  const ic = document.getElementById("walkinIC").value.trim();
+  const name = document.getElementById("walkinName").value.trim().toUpperCase();
+  const bib = document.getElementById("walkinBib").value.trim().toUpperCase();
+  const chip = document.getElementById("walkinChip").value.trim();
+  const contact = document.getElementById("walkinContact").value.trim();
+  const emergency = document.getElementById("walkinEmer").value.trim().toUpperCase();
+  const userProfile = localStorage.getItem('userProfile') || "";
+
+  const distanceEl = document.querySelector('input[name="walkinDistance"]:checked');
+  const distance = document.getElementById("walkinDistance").value.toUpperCase();
+
+  const btn = document.getElementById('walkinSubmitBtn');
+  const qr = document.getElementById('walkinQR');
+  const loader = document.getElementById('walkinLoader');
+
+  btn.disabled = true;
+
+  if (qr) qr.style.display = "none";
+  if (loader) loader.style.display = "block";
+
+fetch(`${WORKER_API}/walkin`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    ic, name, bib, chip,
+    contact, emergency,
+    userProfile, distance
+  })
+})
+  .then(res => res.json())
+  .then(() => {
+
+    btn.disabled = false;
+
+    if (qr) qr.style.display = "block";
+    if (loader) loader.style.display = "none";
+
+    confirmMode = false;
+    document.getElementById('walkinSubmitBtn').innerText = "SUBMIT";
+    document.getElementById("confirmPreview").style.display = "none";
+    document.getElementById("walkinFields").style.display = "block";
+
+    showSuccessBox(bib, name);
+    closeWalkinForm();
+
+  })
+  .catch(() => {
+
+    btn.disabled = false;
+
+    if (qr) qr.style.display = "block";
+    if (loader) loader.style.display = "none";
+
+    confirmMode = false;
+    document.getElementById('walkinSubmitBtn').innerText = "SUBMIT";
+    document.getElementById("confirmPreview").style.display = "none";
+    document.getElementById("walkinFields").style.display = "block";
+  });
+}
+
+function handleCancel() {
+
+  const btn = document.getElementById('walkinSubmitBtn');
+
+  if (confirmMode) {
+
+  document.getElementById("walkinFields").style.display = "block";
+
+  const qr = document.getElementById("walkinQR");
+  if (qr) qr.style.display = "block";
+    // revert balik
+    confirmMode = false;
+    btn.innerText = "SUBMIT";
+
+    document.getElementById("confirmPreview").style.display = "none";
+    return;
+  }
+
+  // cancel kali kedua → tutup form
+  closeWalkinForm();
+}
+
+function closeConfirmBox() {
+  document.getElementById("confirmBox").style.display = "none";
+}
+
+function openWalkinForm() {
+  document.getElementById("walkinFormBox").style.display = "block";
+  loadWalkinCategories();
+}
+
+function closeWalkinForm() {
+  document.getElementById("walkinFormBox").style.display = "none";
+
+  document.getElementById("walkinIC").value = "";
+  document.getElementById("walkinName").value = "";
+  document.getElementById("walkinBib").value = "";
+  document.getElementById("walkinChip").value = "";
+  document.getElementById("walkinContact").value = "";
+  document.getElementById("walkinEmer").value = "";
+  document.getElementById("walkinDistance").innerHTML = `<option>Updating...</option>`;
+
+  const d5 = document.getElementById('dist5');
+  if (d5) d5.checked = true;
+
+  const errorBox = document.getElementById("walkinError");
+  errorBox.innerText = "";
+  errorBox.style.display = "none";
+}
+
+function showSuccessBox(bib, name) {
+  document.getElementById("successBib").innerText = bib;
+  document.getElementById("successName").innerText = name;
+  document.getElementById("successBox").style.display = "block";
+
+  const audio = document.getElementById("successSound");
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play().catch(()=>{});
+  }
+}
+
+function closeSuccessBox() {
+  document.getElementById("successBox").style.display = "none";
+
+  document.getElementById("walkinIC").value = "";
+  document.getElementById("walkinName").value = "";
+  document.getElementById("walkinBib").value = "";
+  document.getElementById("walkinChip").value = "";
+  document.getElementById("walkinContact").value = "";
+  document.getElementById("walkinEmer").value = "";
+
+  document.getElementById("walkinDistance").selectedIndex = 0;
+}
+
+        // auto focus desktop
+        function getActiveSearchInput() {
+          const inputs = document.querySelectorAll('#searchTerm');
+
+          for (let input of inputs) {
+            if (input.offsetParent !== null) {
+              return input;
+            }
+          }
+          return null;
+        }
+
+        // ✅ auto focus masa load
+        window.addEventListener('DOMContentLoaded', () => {
+          if (!isMobileDevice()) {
+            getActiveSearchInput()?.focus();
+          }
+        });
+
+        // ✅ auto re-focus bila klik (SMART version)
+        document.addEventListener('click', (e) => {
+          if (isMobileDevice()) return;
+
+          const tag = e.target.tagName;
+
+          const isFormElement =
+            tag === 'INPUT' ||
+            tag === 'TEXTAREA' ||
+            tag === 'SELECT' ||   // 🔥 allow dropdown
+            tag === 'OPTION' ||   // 🔥 allow dropdown option
+            tag === 'BUTTON';     // optional (tak ganggu button click)
+
+          if (!isFormElement) {
+            getActiveSearchInput()?.focus();
+          }
+        });
+
+        var scanTimer;
+
+
+
+
+function handleEnter(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    search();
+  }
+}
+
+
+    let initialHeight = window.innerHeight;
+
+window.addEventListener("resize", () => {
+  const currentHeight = window.innerHeight;
+  const keyboardOpen = currentHeight < initialHeight - 100;
+
+  if (!box) return;
+
+  if (keyboardOpen) {
+    box.style.bottom = "300px"; // 🔥 adjust ikut phone (250–350)
+  } else {
+    box.style.bottom = "48px";
+  }
+});
+
+
+    const box = document.querySelector('.collect-box');
+
+    function updateKeyboardOffset() {
+      if (!window.visualViewport) return;
+
+      const viewportHeight = window.visualViewport.height;
+      const fullHeight = window.innerHeight;
+
+      const keyboardHeight = fullHeight - viewportHeight;
+
+      if (keyboardHeight > 100) {
+        // keyboard muncul
+        box.style.bottom = (keyboardHeight + 10) + "px";
+      } else {
+        // keyboard hilang
+        box.style.bottom = "48px";
+      }
+    }
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", updateKeyboardOffset);
+    }
+
+
+// XZing Scanner
+function openScanner() {
+  if (typeof Android !== "undefined" && Android.startScanner) {
+    Android.startScanner();
+  } else {
+    alert("Scanner not available");
+  }
+}
+
+function handleQR(data) {
+  console.log("QR:", data);
+
+  const input = document.getElementById("searchTerm");
+  if (!input) return;
+
+  // ambil value lama
+  const current = input.value.trim();
+
+  // split jadi list
+  let list = current ? current.split(",").map(v => v.trim()).filter(v => v) : [];
+
+  // ✅ elak duplicate (optional tapi recommended)
+  if (!list.includes(data)) {
+    list.push(data);
+  }
+
+  const newValue = list.join(", ");
+  input.value = newValue;
+
+  // ✅ terus search semua
+  search(newValue);
+}
+
+function handleLogoutClick() {
+  const role = (localStorage.getItem('userProfile') || "").toLowerCase();
+
+  // 👉 hanya admin & mod guna menu
+  if (role === "admin" || role === "mod") {
+    openLogoutMenu();
+  } else {
+    logout(); // user biasa terus logout
+  }
+}
+
+         function loadLogin() {
+           window.location.href = "login.html";
+         }
+
+         function logout() {
+           setAllButtonsDisabled(true);
+
+           const logoutBtn = document.getElementById('logoutBtn');
+           logoutBtn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i>';
+
+           const token = localStorage.getItem('sessionToken');
+
+           function finishLogout() {
+             localStorage.clear();
+             loadLogin();
+           }
+
+           if (token) {
+             apiLogout(token)
+               .then(() => finishLogout())
+               .catch(() => finishLogout());
+           } else {
+             finishLogout();
+           }
+         }
+
+         function apiLogout(token) {
+           return fetch(`${WORKER_API}/logout`, {
+             method: "POST",
+             headers: { "Content-Type": "application/json" },
+             body: JSON.stringify({ token })
+           });
+         }
+
+         function openLogoutMenu() {
+           const menu = document.getElementById("logoutMenu");
+           if (!menu) return;
+
+           menu.style.display = menu.style.display === "block" ? "none" : "block";
+         }
+
+         document.addEventListener("click", function(e) {
+           const menu = document.getElementById("logoutMenu");
+           const btn = document.getElementById("logoutBtn");
+
+           if (!menu || !btn) return;
+
+           if (!menu.contains(e.target) && !btn.contains(e.target)) {
+             menu.style.display = "none";
+           }
+         });
+
+         function goAdmin() {
+           const btn = document.getElementById("adminBtn");
+           const logoutBtn = document.getElementById("logoutMenuBtn");
+
+           if (btn?.dataset.loading) return;
+           btn.dataset.loading = "true";
+
+           [btn, logoutBtn].forEach(el => {
+             if (el) {
+               el.style.pointerEvents = "none";
+               el.style.opacity = "0.6";
+             }
+           });
+
+           btn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i>';
+
+           // 👉 redirect page (Android style)
+           window.location.href = "admin.html";
+         }
+
+         function goMonitor() {
+           const btn = document.getElementById("monitorBtn");
+           const logoutBtn = document.getElementById("logoutMenuBtn");
+
+           if (btn?.dataset.loading) return;
+           btn.dataset.loading = "true";
+
+           [btn, logoutBtn].forEach(el => {
+             if (el) {
+               el.style.pointerEvents = "none";
+               el.style.opacity = "0.6";
+             }
+           });
+
+           btn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i>';
+
+           window.location.href = "monitor.html";
+         }
+
+         function logoutFromMenu() {
+           const btn = document.getElementById("logoutMenuBtn");
+
+           const adminBtn = document.getElementById("adminBtn");
+           const monitorBtn = document.getElementById("monitorBtn");
+
+           [adminBtn, monitorBtn, btn].forEach(el => {
+             if (el) {
+               el.style.pointerEvents = "none";
+               el.style.opacity = "0.6";
+             }
+           });
+
+           btn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i>';
+
+           const token = localStorage.getItem('sessionToken');
+
+           function finishLogout() {
+             localStorage.clear();
+             window.location.replace("index.html"); // 🔥 prevent back
+           }
+
+           if (token) {
+             fetch(`${WORKER_API}/logout`, {
+               method: "POST",
+               headers: { "Content-Type": "application/json" },
+               body: JSON.stringify({
+                 token: token
+               })
+             })
+             .then(() => finishLogout())
+             .catch(() => finishLogout());
+           } else {
+             finishLogout();
+           }
+         }
+
+
+         document.addEventListener("focusin", function (e) {
+           if (e.target.closest("#collectBoxes")) {
+             Android.enableResize(true);
+           } else {
+             Android.enableResize(false);
+           }
+         });
+
+         document.addEventListener("focusout", function () {
+           Android.enableResize(false);
+         });
+
+
+         window.addEventListener("scroll", function () {
+           const btn = document.getElementById("clearButtonContainer");
+           if (!btn) return;
+
+           if (window.scrollY > 50) {
+             btn.classList.add("floating");
+           } else {
+             btn.classList.remove("floating");
+           }
+         });
+
+
+         document.addEventListener("click", function (e) {
+           const btn = e.target.closest(".dropdown-btn");
+           const menus = document.querySelectorAll(".dropdown-menu");
+
+           menus.forEach(m => m.classList.remove("show"));
+
+           if (btn) {
+             const menu = btn.nextElementSibling;
+             if (menu) {
+               menu.classList.toggle("show");
+               e.stopPropagation();
+             }
+           }
+         });
+
+         function setOption(val, label) {
+           document.getElementById("searchOption").value = val;
+           document.getElementById("searchDropdownBtn").innerText = label;
+           updatePlaceholder();
+         }
+</script>
+
+</body>
+</html>
