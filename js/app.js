@@ -16,7 +16,10 @@ function render(path) {
 
   if (path === "/" || path === "/login") {
     app.innerHTML = loginPage();
-    initLoginUI();
+
+    requestAnimationFrame(() => {
+      initLoginUI();
+    });
 
   } else if (path === "/mobile") {
     app.innerHTML = mobilePage();
