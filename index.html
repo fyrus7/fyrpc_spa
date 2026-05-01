@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
-  
 <head>
   <meta charset="UTF-8">
   <title>FyRPC</title>
-  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<div id="app"></div>
+<script>
+  const token = localStorage.getItem("sessionToken");
 
-<link rel="stylesheet" href="css/style.css"> 
-<script src="js/views.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/app.js"></script> 
+  if (token) {
+    window.location.href = "mobile.html";
+  } else {
+    window.location.href = "login.html";
+  }
+</script>
 
 </body>
 </html>
