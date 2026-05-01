@@ -47,4 +47,4 @@ window.addEventListener("DOMContentLoaded", async () => {
   if (profile) {
     routeUser(profile);
   }
-});a
+});
